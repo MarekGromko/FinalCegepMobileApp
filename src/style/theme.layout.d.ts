@@ -1,8 +1,26 @@
+
+/**
+ * Can be easily used inside a LinearGradient jsx element
+ * 
+ * @example
+ * ```tsx
+ *  let gradient: Gradient // is set at some point
+ *  <LinearGradient {...gradient}>
+ *      // ...
+ *  </LinearGradient>
+ * ```
+ */
 type Gradient = {
     colors:     string[],
     locations:  number[]
 };
 
+/**
+ * Layout for all themes values
+ * Every custom theme should satisfies this tyoe
+ * 
+ * @see /style/themes/dark.ts
+ */
 declare type ThemeLayout = {
     readonly background: string,
     readonly backgroundPanel: string,

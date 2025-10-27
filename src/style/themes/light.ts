@@ -1,3 +1,6 @@
+/**
+ * Light theme values
+ */
 export default {
     background:         "#F2F2F4",
     backgroundPanel:    "#E4E4E4",

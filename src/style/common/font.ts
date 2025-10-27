@@ -1,5 +1,4 @@
 const FNT = "inter";
-
 export const regular = { fontFamily: `${FNT}-regular` };
 export const light = { fontFamily: `${FNT}-light` };
 export const medium = { fontFamily: `${FNT}-medium` };

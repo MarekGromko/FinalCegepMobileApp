@@ -1,3 +1,6 @@
+/**
+ * Dark theme values
+ */
 export default {
     background:         "#060606",
     backgroundPanel:    "#282828",

@@ -7,6 +7,7 @@ import { ThemeProvider } from '../context/ThemeContext';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+    // load all the fonts
     const [loaded] = useFonts({
         "inter-regular":        require('@assets/fonts/Inter/Inter-Regular.ttf'),
         "inter-light":          require('@assets/fonts/Inter/Inter-Light.ttf'),
@@ -24,9 +25,9 @@ export default function RootLayout() {
         }
     }, [loaded]);
 
-    // if (!loaded) {
-    //     return null;
-    // }
+    if (!loaded) {
+        return null;
+    }
 
     return (
         <ThemeProvider>
