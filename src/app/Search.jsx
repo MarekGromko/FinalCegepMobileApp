@@ -1,10 +1,10 @@
-import { Text,View } from "react-native";
+import { Tex,View } from "react-native";
+import SearchbarComponent, { SearchBarComponent } from "../components/SearchComponent"
 
 export default function Search(){
     return(
         <View>
-            <Text>Testing </Text>
-        
+            <SearchbarComponent/>        
         
         </View>
     )
