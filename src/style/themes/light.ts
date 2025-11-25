@@ -5,10 +5,11 @@ export default {
     background:         "#F2F2F4",
     backgroundPanel:    "#E4E4E4",
     backgroundCard:     "#D7D7D7",
+    blackBackground:    "#000",
     text:           "#202020",
     textDim:        "#20202088",
     textReversed:   "#F6F6F6",
-    primary:        "#C2923D",
+    primary:        "#eea72eff",
     primaryShade:   "#D1B075",
     priamryDim:     "#E0AD5288",
     primaryGradient: {

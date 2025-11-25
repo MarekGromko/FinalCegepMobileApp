@@ -23,6 +23,7 @@ type Gradient = {
  */
 declare type ThemeLayout = {
     readonly background: string,
+    readonly blackBackground: string,
     readonly backgroundPanel: string,
     readonly backgroundCard: string,
     readonly text: string,

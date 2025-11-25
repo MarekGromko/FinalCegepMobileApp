@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Tabs } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { ThemeProvider } from '../context/ThemeContext';
@@ -31,7 +31,7 @@ export default function RootLayout() {
 
     return (
         <ThemeProvider>
-            <Stack />
+            <Tabs />
         </ThemeProvider>
     );
 }
