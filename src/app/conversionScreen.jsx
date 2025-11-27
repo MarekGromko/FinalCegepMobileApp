@@ -4,8 +4,10 @@ import { Picker } from "@react-native-picker/picker"
 import { convertingCurrency, getConversionRate } from '../components/conversionComponents';
 import { currencyList } from '../data/currencies';
 import  { flagsMap } from "../data/flags";
+import { router } from 'expo-router';
 
 //Source picker : https://github.com/react-native-picker/picker
+
 export default function pageConversion() {
     const [ baseCurrency, setBaseCurrency ] = useState("CAD");
     const [ convertToCurrency, setConvertToCurrency] = useState("USD");
@@ -33,21 +35,20 @@ export default function pageConversion() {
                         ))}
                     </Picker>
                 </View>
-                <View>
-                    <TouchableOpacity onPress={() => convertingCurrency(baseCurrency, convertToCurrency, inputValue)}>
-                        <Text>Enter</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
             <View id='values'>
                 <View>
-                    <TextInput placeholder='Insert the amount to convert' inputMode='decimal' maxLength={10} onChangeText={setInputValue}></TextInput>
-                    <Text>Rate : {() => getConversionRate(baseCurrency, convertToCurrency)}</Text>
-                    <TextInput>{convertedValue}</TextInput>
+                    <View>
+                        <TextInput placeholder='Insert the amount to convert' inputMode='decimal' maxLength={10} onChangeText={setInputValue}></TextInput>
+                        <TouchableOpacity onPress={() => convertingCurrency(baseCurrency, convertToCurrency, inputValue)}>
+                        <Text>Enter</Text>
+                    </TouchableOpacity>
                 </View>
-                
+                    <Text>Rate : {getConversionRate(baseCurrency, convertToCurrency)}</Text>
+                    <Text>{convertedValue}</Text>
+                </View>
             </View>
-
+            <TouchableOpacity onPress={() => router.push("/")}><Text>Home</Text></TouchableOpacity>
         </View>
     );
 }

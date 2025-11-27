@@ -604,11 +604,11 @@ export const currencyMap = {
     },
     "XAG": {
         sign: "oz t",
-        users: []
+        users: ["US"]
     },
     "XAU": {
         sign: "oz t",
-        users: []
+        users: ["US"]
     },
     "XCD": {
         sign: "$",
