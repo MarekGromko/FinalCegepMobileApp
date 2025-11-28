@@ -4,7 +4,6 @@ import { Picker } from "@react-native-picker/picker"
 import { convertingCurrency, getConversionRate } from '../components/conversionComponents';
 import { currencyList } from '../data/currencies';
 import  { flagsMap } from "../data/flags";
-import { router } from 'expo-router';
 
 //Source picker : https://github.com/react-native-picker/picker
 
@@ -48,7 +47,6 @@ export default function pageConversion() {
                     <Text>{convertedValue}</Text>
                 </View>
             </View>
-            <TouchableOpacity onPress={() => router.push("/")}><Text>Home</Text></TouchableOpacity>
         </View>
     );
 }
