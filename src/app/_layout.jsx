@@ -51,7 +51,7 @@ const ThemedTabs = () => {
                 name="currencies" 
                 options={{
                     title: 'Currencies',
-                    tabBarIcon: ({ color }) => (<Ionicons name="list" color={color} size={24} />),
+                    tabBarIcon: ({ color }) => (<Ionicons name="cash-outline" color={color} size={24} />),
                 }}
             />
 
