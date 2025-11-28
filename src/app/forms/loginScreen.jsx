@@ -8,8 +8,7 @@ export default function LoginScreen(){
        const style = useThemedStyle(themedStyles);
         const [email, setEmail] = useState("");
         const [password, setPassword] = useState("");
-    return(
-        
+    return(   
        <View style={style.container}>
             <Text style={style.sub_header_title}> Login</Text>
             <View style={style.sub_container}>
