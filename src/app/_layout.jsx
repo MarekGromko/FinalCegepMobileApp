@@ -1,13 +1,72 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Tabs, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { ThemeProvider } from '../context/ThemeContext';
+import { Ionicons } from '@expo/vector-icons';
+import { useThemedStyle, ThemedStyle } from '../hook/useThemedStyle';
+import { CS } from '../style/CommonStyle';
+import { Text, View } from 'react-native'; 
 
 SplashScreen.preventAutoHideAsync();
 
+
+const tsf = ThemedStyle((theme) => ({
+    header: { backgroundColor: theme.backgroundPanel },
+    headerText: { color: theme.text },
+    primary: { color: theme.primary },
+    textDim: { color: theme.textDim },
+    backgroundCard: { backgroundColor: theme.backgroundCard }
+}));
+
+
+const ThemedTabs = () => {
+    const ts = useThemedStyle(tsf);
+
+    return (
+        <Tabs screenOptions={{ 
+            tabBarActiveTintColor: ts.primary.color, 
+            tabBarInactiveTintColor: ts.textDim.color,
+            tabBarStyle: { 
+                backgroundColor: ts.backgroundCard.backgroundColor, 
+                borderTopColor: ts.backgroundCard.backgroundColor, 
+                height: 60, 
+                paddingBottom: 5 
+            },
+            headerShown: true,
+            headerStyle: { backgroundColor: ts.header.backgroundColor },
+            headerTintColor: ts.headerText.color,
+            headerTitleStyle: { ...CS.Font.bold }
+        }}>
+            
+            <Tabs.Screen 
+                name="index" 
+                options={{
+                    title: 'Accueil',
+                    tabBarIcon: ({ color }) => (<Ionicons name="home" color={color} size={24} />),
+                }}
+            />
+            
+            <Tabs.Screen 
+                name="currencies" 
+                options={{
+                    title: 'Currencies',
+                    tabBarIcon: ({ color }) => (<Ionicons name="cash-outline" color={color} size={24} />),
+                }}
+            />
+
+            <Tabs.Screen
+                name="details/[code]"
+                options={{
+                    title: 'Currency Details',
+                    href: null,
+                }}
+            />
+        </Tabs>
+    );
+}
+
 export default function RootLayout() {
-    // load all the fonts
     const [loaded] = useFonts({
         "inter-regular":        require('@assets/fonts/Inter/Inter-Regular.ttf'),
         "inter-light":          require('@assets/fonts/Inter/Inter-Light.ttf'),
@@ -18,20 +77,18 @@ export default function RootLayout() {
         "inter-medium-italic":  require('@assets/fonts/Inter/Inter-Medium-Italic.ttf'),
         "inter-bold-italic":    require('@assets/fonts/Inter/Inter-Bold-Italic.ttf')
     });
-
+    
     useEffect(() => {
         if (loaded) {
-            SplashScreen.hide();
+            SplashScreen.hideAsync(); 
         }
     }, [loaded]);
 
-    if (!loaded) {
-        return null;
-    }
+    if (!loaded) return null;
 
     return (
         <ThemeProvider>
-            <Stack />
+            <ThemedTabs /> 
         </ThemeProvider>
     );
 }
