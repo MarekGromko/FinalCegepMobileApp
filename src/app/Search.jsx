@@ -1,15 +1,20 @@
-import React, { useContext } from 'react';
-import { View ,TouchableOpacity,Image} from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, TouchableOpacity, Image, FlatList, Text, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 import SearchbarComponent from '../components/SearchComponent';
 import { useThemedStyle, ThemedStyle } from '../hook/useThemedStyle';
-import dark from '../style/themes/dark.ts';
-import light from '../style/themes/light.ts';
 import { CS } from '../style/CommonStyle';
+import { currencyList } from '../data/currencies';
+import { flagsMap } from '../data/flags';
+import en from '../i18n/en.json';
 
-const stylesFactory = ThemedStyle((theme,label) => ({
+const stylesFactory = ThemedStyle((theme) => ({
     container: {
         flex: 1,
-        backgroundColor: label === 'dark'? dark.background: light.background,
+        backgroundColor: theme.background,
+        ...CS.Flex.column(0),
+    },
+    headerSection: {
         ...CS.Flex.column(24),
         ...CS.padding(24),
     },
@@ -23,47 +28,141 @@ const stylesFactory = ThemedStyle((theme,label) => ({
         marginRight: 10,
     },
     searchbar: {
-        backgroundColor: label === 'dark'? dark.backgroundPanel:light.backgroundPanel,
+        backgroundColor: theme.backgroundPanel,
         borderRadius: 24,
         ...CS.padding(2),
     },
     searchbarInput: {
-        color: label === 'dark'?dark.text:light.text
+        color: theme.text
     },
+    searchbarIconColor: theme.primary,
+    searchbarPlaceHolder:  theme.text,
     
     
-    
-    settingIconColor: label === 'dark' ? dark.primary : light.primary,
-    
-    settingIcon: label === 'dark' ? require('../icons/search_settings_icon_dark.png') : require('../icons/search_settings_icon.png'),
-
-    searchbarIconColor: label === 'dark'?dark.primary:'grey',
-    searchbarPlaceHolder:  label === 'dark'?dark.text:light.text,
-
+    resultsContainer: {
+        flex: 1,
+    },
+    resultItem: {
+        backgroundColor: theme.backgroundPanel,
+        borderColor: theme.backgroundCard,
+        ...CS.padding(16),
+    },
+    flagContainer: {
+        backgroundColor: theme.background,
+    },
+    resultText: {
+        color: theme.text,
+    },
+    resultTextDim: {
+        color: theme.textDim,
+    },
+    resultPrimary: {
+        color: theme.primary,
+    },
 }));
 
 export default function Search() {
-    const searchBarStyles = useThemedStyle(stylesFactory);
-    
+    const styles = useThemedStyle(stylesFactory);
+    const router = useRouter();
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const filteredCurrencies = searchQuery.trim() === '' 
+        ? [] 
+        : currencyList.filter(item => 
+            item.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (en.currencies[item.code] && en.currencies[item.code].toLowerCase().includes(searchQuery.toLowerCase()))
+          );
+
+    const displayResultItem = ({ item }) => {
+        const name = en.currencies[item.code] ?? item.code;
+        const countryCode = item.users[0];
+        const flag = countryCode ? flagsMap[countryCode] : "🌐";
+
+        return (
+            <TouchableOpacity 
+                style={[ss.item, { backgroundColor: styles.resultItem.backgroundColor, borderColor: styles.resultItem.borderColor }]}
+                activeOpacity={0.7}
+                onPress={() => {
+                    console.log(`Clicked on ${item.code}`);
+                    router.push(`/details/${item.code}`);
+                }}
+            >
+                <View style={[ss.flagContainer, { backgroundColor: styles.flagContainer.backgroundColor }]}>
+                    <Text style={ss.flag}>{flag}</Text>
+                </View>
+
+                <View style={ss.info}>
+                    <View style={CS.Flex.row(8)}>
+                        <Text style={[CS.Font.bold, { color: styles.resultText.color }]}>{item.code}</Text>
+                        <Text style={[CS.Font.bold, { color: styles.resultPrimary.color }]}>{item.sign}</Text>
+                    </View>
+                    <Text 
+                        style={[CS.Font.regular, { color: styles.resultTextDim.color }, ss.name]}
+                        numberOfLines={1}
+                    >
+                        {name}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        );
+    };
 
     return (
-        <View style={searchBarStyles.container}>
-            <View style={searchBarStyles.headerRow}>
-                <View style={searchBarStyles.searchbarContainer}>
-                    <SearchbarComponent
-                        style={searchBarStyles.searchbar}
-                        inputStyle={searchBarStyles.searchbarInput}
-                        iconColor={searchBarStyles.searchbarIconColor}
-                        placeHolderColor={searchBarStyles.searchbarPlaceHolder}
-                    />
+        <View style={styles.container}>
+            <View style={styles.headerSection}>
+                <View style={styles.headerRow}>
+                    <View style={styles.searchbarContainer}>
+                        <SearchbarComponent
+                            style={styles.searchbar}
+                            inputStyle={styles.searchbarInput}
+                            iconColor={styles.searchbarIconColor}
+                            placeHolderColor={styles.searchbarPlaceHolder}
+                            onSearchChange={setSearchQuery}
+                        />
+                    </View>
                 </View>
-                <TouchableOpacity>
-                    <Image 
-                        source={searchBarStyles.settingIcon}
-                        style={{ width: 24, height: 24 }}
-                    />
-                </TouchableOpacity>
+            </View>
+
+            <View style={styles.resultsContainer}>
+                <FlatList
+                    data={filteredCurrencies}
+                    keyExtractor={(item) => item.code}
+                    renderItem={displayResultItem}
+                    contentContainerStyle={ss.listContent}
+                    scrollEnabled={true}
+                />
             </View>
         </View>
     );
 }
+
+const ss = StyleSheet.create({
+    listContent: {
+        ...CS.padding(16),
+        gap: 12,
+    },
+    item: {
+        ...CS.Flex.row(16),
+        alignItems: 'center',
+        ...CS.padding(16),
+        borderRadius: 16,
+        borderWidth: 1,
+    },
+    flagContainer: {
+        ...CS.Flex.centeredColumn(),
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+    },
+    flag: {
+        fontSize: 28,
+    },
+    info: {
+        flex: 1,
+        ...CS.Flex.column(4),
+    },
+    name: {
+        textTransform: 'capitalize',
+        fontSize: 14,
+    }
+});
