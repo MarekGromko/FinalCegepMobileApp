@@ -16,11 +16,13 @@ export function getConversionRate (baseCurrency, convertToCurrency)  {
     fetchData();
     }, [baseCurrency, convertToCurrency]);
   return conversionRate
-}
+};
 
 export function convertingCurrency(rate, value) {
   if (!rate) {
     return 0;
   }
-  return (value * rate)
+  value = value * rate
+  let roundedUpValue = Math.ceil(value * 100) / 100
+  return roundedUpValue
 };

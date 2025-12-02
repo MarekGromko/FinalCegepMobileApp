@@ -46,27 +46,11 @@ const ThemedTabs = () => {
                     tabBarIcon: ({ color }) => (<Ionicons name="home" color={color} size={24} />),
                 }}
             />
-            
-            <Tabs.Screen 
-                name="currencies" 
-                options={{
-                    title: 'Currencies',
-                    tabBarIcon: ({ color }) => (<Ionicons name="list" color={color} size={24} />),
-                }}
-            />
             <Tabs.Screen 
                 name="conversionScreen" 
                 options={{
                     title: 'Conversion',
                     tabBarIcon: ({ color }) => (<Ionicons name="cash-outline" color={color} size={24} />),
-                }}
-            />
-
-            <Tabs.Screen
-                name="details/[code]"
-                options={{
-                    title: 'Currency Details',
-                    href: null,
                 }}
             />
         </Tabs>
