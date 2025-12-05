@@ -1,3 +1,5 @@
+import "../i18n/config"
+import "../i18n/config.d"
 import { useFonts } from 'expo-font';
 import { Tabs, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
