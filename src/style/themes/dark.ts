@@ -3,12 +3,13 @@
  */
 export default {
     background:         "#060606",
+    blackBackground:   "#000",
     backgroundPanel:    "#282828",
     backgroundCard:     "#444444",
     text:           "#FDFDFF",
     textDim:        "#FDFDFF88",
     textReversed:   "#101010",
-    primary:        "#D7BB89",
+    primary:        "#e2a232ff",
     primaryShade:   "#C2923D",
     priamryDim:     "#E0AD5288",
     primaryGradient: {
