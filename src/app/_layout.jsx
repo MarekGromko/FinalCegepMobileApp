@@ -53,6 +53,22 @@ const ThemedTabs = () => {
                     tabBarIcon: ({ color }) => (<Ionicons name="cash-outline" color={color} size={24} />),
                 }}
             />
+            
+            <Tabs.Screen 
+                name="currencies" 
+                options={{
+                    title: 'Currencies',
+                    tabBarIcon: ({ color }) => (<Ionicons name="cash-outline" color={color} size={24} />),
+                }}
+            />
+
+            <Tabs.Screen
+                name="details/[code]"
+                options={{
+                    title: 'Currency Details',
+                    href: null,
+                }}
+            />
         </Tabs>
     );
 }
