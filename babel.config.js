@@ -13,6 +13,7 @@ module.exports = function (api) {
                     ".ttf"
                 ]
             }],
+            "react-native-worklets/plugin",
         ]
     };
 };
