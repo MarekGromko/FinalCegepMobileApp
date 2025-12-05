@@ -27,7 +27,7 @@ export const ThemeProvider = ({children}: React.PropsWithChildren)=>{
         isDark:    currentTheme === 'dark',
         label:     currentTheme,
         theme:     themes[currentTheme],
-        setTheme:  (theme)=>void setCurrentTheme(theme)
+        setTheme:  (theme)=> setCurrentTheme(theme)
     }
 
     return (

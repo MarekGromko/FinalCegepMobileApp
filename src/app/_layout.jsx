@@ -1,5 +1,5 @@
 import { useFonts } from 'expo-font';
-import { Tabs, Stack } from 'expo-router';
+import { Stack,Tabs} from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { ThemeProvider } from '../context/ThemeContext';
@@ -55,13 +55,23 @@ const ThemedTabs = () => {
                 }}
             />
 
-            <Tabs.Screen
+           <Tabs.Screen
                 name="details/[code]"
                 options={{
                     title: 'Currency Details',
                     href: null,
                 }}
-            />
+            /> 
+
+            <Tabs.Screen
+                name="Search"
+                options={{
+                    title: 'Search',
+                    tabBarIcon : ({color}) => (<Ionicons name="search" color={color} size={24}/>),
+                }}
+            />  
+
+
         </Tabs>
     );
 }
@@ -88,7 +98,7 @@ export default function RootLayout() {
 
     return (
         <ThemeProvider>
-            <ThemedTabs /> 
+            <ThemedTabs />
         </ThemeProvider>
     );
 }
