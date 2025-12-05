@@ -62,6 +62,14 @@ const ThemedTabs = () => {
                 }}
             />
 
+            <Tabs.Screen
+                name="Search"
+                options={{
+                    title: '',
+                    tabBarIcon : ({color}) => (<Ionicons name="search" color={color} size={32}/>),
+                }}
+            />  
+            
            <Tabs.Screen
                 name="details/[code]"
                 options={{
@@ -69,16 +77,6 @@ const ThemedTabs = () => {
                     href: null,
                 }}
             /> 
-
-            <Tabs.Screen
-                name="Search"
-                options={{
-                    title: 'Search',
-                    tabBarIcon : ({color}) => (<Ionicons name="search" color={color} size={24}/>),
-                }}
-            />  
-
-
         </Tabs>
     );
 }
