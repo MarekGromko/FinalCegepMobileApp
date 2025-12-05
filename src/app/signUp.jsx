@@ -1,6 +1,6 @@
 import { use, useState } from "react";
 import { Text, View, TextInput, Pressable} from "react-native";
-import { ThemedStyle, useThemedStyle } from "../../hook/useThemedStyle";
+import { ThemedStyle, useThemedStyle } from "../hook/useThemedStyle";
 
  
  
