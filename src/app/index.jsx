@@ -35,7 +35,6 @@ export default function RootPage(){
                 ></Switch>
             </View>
             <Text style={[ss.text, ts.text]}>Hello World!</Text>
-            <TouchableOpacity onPress={() => router.push("/conversionScreen")}><Text>Converter</Text></TouchableOpacity>
         </View>
     );
 }
