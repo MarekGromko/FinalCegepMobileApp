@@ -7,9 +7,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useThemedStyle, ThemedStyle } from '../hook/useThemedStyle';
 import { CS } from '../style/CommonStyle';
 import { Text, View } from 'react-native'; 
-
+import * as NavigationBar from 'expo-navigation-bar';
 SplashScreen.preventAutoHideAsync();
-
+NavigationBar.setVisibilityAsync('hidden'); 
 
 const tsf = ThemedStyle((theme) => ({
     header: { backgroundColor: theme.backgroundPanel },
@@ -42,36 +42,41 @@ const ThemedTabs = () => {
             <Tabs.Screen 
                 name="index" 
                 options={{
-                    title: 'Accueil',
-                    tabBarIcon: ({ color }) => (<Ionicons name="home" color={color} size={24} />),
+                    title:"",
+                    tabBarIcon: ({ color }) => (<Ionicons name="home" color={color} size={32} />),
+                }}
+            />
+            <Tabs.Screen 
+                name="conversionScreen" 
+                options={{
+                    title:"",
+                    tabBarIcon: ({ color }) => (<Ionicons name="repeat" color={color} size={32} />),
                 }}
             />
             
             <Tabs.Screen 
                 name="currencies" 
                 options={{
-                    title: 'Currencies',
-                    tabBarIcon: ({ color }) => (<Ionicons name="cash-outline" color={color} size={24} />),
+                    title:"",
+                    tabBarIcon: ({ color }) => (<Ionicons name="cash-outline" color={color} size={32} />),
                 }}
             />
-
-           <Tabs.Screen
-                name="details/[code]"
-                options={{
-                    title: 'Currency Details',
-                    href: null,
-                }}
-            /> 
 
             <Tabs.Screen
                 name="Search"
                 options={{
-                    title: 'Search',
-                    tabBarIcon : ({color}) => (<Ionicons name="search" color={color} size={24}/>),
+                    title: '',
+                    tabBarIcon : ({color}) => (<Ionicons name="search" color={color} size={32}/>),
                 }}
             />  
-
-
+            
+           <Tabs.Screen
+                name="details/[code]"
+                options={{
+                    title: '',
+                    href: null,
+                }}
+            /> 
         </Tabs>
     );
 }

@@ -1,9 +1,9 @@
-import { Switch, StyleSheet, Text, View, Platform } from 'react-native';
+import { Switch, StyleSheet, Text, View, Platform, TouchableOpacity } from 'react-native';
 import { useContext } from 'react';
 import { ThemedStyle, useThemedStyle } from '../hook/useThemedStyle';
 import { ThemeContext } from '../context/ThemeContext';
 import { CS } from '../style/CommonStyle';
-
+import { router } from 'expo-router';
 // for ease of use, I give short variables name for stylesheets
 // ss   = the static stylesheet
 // tsf  = the theme style factory function
