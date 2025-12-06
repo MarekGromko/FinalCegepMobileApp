@@ -11,14 +11,14 @@ export default {
     textReversed:   "#101010",
     primary:        "#e2a232ff",
     primaryShade:   "#C2923D",
-    priamryDim:     "#E0AD5288",
+    primaryDim:     "#E0AD5288",
     primaryGradient: {
         colors:     ['#96642c', '#dda74b', '#f5d27a', '#F7DEA1'],
         locations:  [0, 0.25, 0.7, 1]
     },
     semantic: {
-        succes:     "#1BBE19",
-        succesDim:  "#06EC754C",
+        success:     "#1BBE19",
+        successDim:  "#06EC754C",
         error:      "#EC0616",
         errorDim:   "#EC06164C"
     }

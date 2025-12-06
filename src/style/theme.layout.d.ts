@@ -31,11 +31,11 @@ declare type ThemeLayout = {
     readonly textReversed: string,
     readonly primary: string,
     readonly primaryShade: string,
-    readonly priamryDim: string,
+    readonly primaryDim: string,
     readonly primaryGradient: Gradient,
     readonly semantic: {
-        readonly succes: string,
-        readonly succesDim: string,
+        readonly success: string,
+        readonly successDim: string,
         readonly error: string,
         readonly errorDim: string
     }

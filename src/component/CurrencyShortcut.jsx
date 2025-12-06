@@ -126,7 +126,7 @@ const tsf = ThemedStyle((theme) => ({
         borderColor: theme.backgroundCard,
     },
     arrow: {
-        color: theme.priamryDim,
+        color: theme.primaryDim,
     },
     code: {
         color: theme.textDim,
