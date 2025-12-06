@@ -2,6 +2,8 @@ import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedStyle, useThemedStyle } from '../hook/useThemedStyle';
 import { CS } from '../style/CommonStyle';
+import { currencyMap } from '@src/data/currencies';
+import { flagsMap } from '@src/data/flags';
 
 const formatTimestamp = (timestamp) => {
     const date = new Date(timestamp);
@@ -31,36 +33,21 @@ const formatAmount = (amount) => {
 };
 
 /**
- * HistoryEntry - A component to display a single conversion history entry
- * 
- * @param {Object} props
- * @param {string} props.fromCurrency - Source currency code (e.g., 'USD')
- * @param {string} props.toCurrency - Target currency code (e.g., 'EUR')
- * @param {string} props.fromSign - Source currency symbol (e.g., '$')
- * @param {string} props.toSign - Target currency symbol (e.g., '€')
- * @param {number} props.fromAmount - Amount in source currency
- * @param {number} props.toAmount - Converted amount in target currency
- * @param {number} props.rate - Exchange rate used
- * @param {string} props.timestamp - When the conversion was made (ISO string or formatted date)
- * @param {string} props.fromFlag - Source currency flag emoji (optional)
- * @param {string} props.toFlag - Target currency flag emoji (optional)
- * @param {Function} props.onPress - Callback when the entry is pressed (optional)
- */
+ * A component to display a single conversion history entry
+**/
 export default function HistoryEntry({ 
     fromCurrency, 
     toCurrency, 
-    fromSign, 
-    toSign,
     fromAmount,
     toAmount,
     rate,
     timestamp,
-    fromFlag,
-    toFlag
 }) {
     const ts = useThemedStyle(tsf);
-    fromFlag = fromFlag || '🌐';
-    toFlag = toFlag || '🌐';
+    const fromSign  = currencyMap[fromCurrency].sign;
+    const toSign    = currencyMap[toCurrency].sign;
+    const fromFlag  = flagsMap[currencyMap[fromCurrency].users[0]] ?? '🌐';
+    const toFlag    = flagsMap[currencyMap[toCurrency].users[0]] ?? '🌐';
     return (
         <View 
             style={[ss.container, ts.container]}
@@ -115,8 +102,8 @@ const ss = StyleSheet.create({
         shadowOpacity: 0.08,
         shadowRadius: 3,
         elevation: 2,
-        margin: 8,
-        marginBottom: 14
+        margin: 12,
+        marginBottom: 8
     },
     topSection: {
         ...CS.Flex.row(),

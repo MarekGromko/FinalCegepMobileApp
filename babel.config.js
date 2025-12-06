@@ -6,6 +6,7 @@ module.exports = function (api) {
             ["module-resolver", {
                 "alias": {
                     "@assets": "./assets",
+                    "@src": "./src"
                 },
                 "extensions": [
                     ".js",

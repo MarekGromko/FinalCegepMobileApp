@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text, View, Image, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemedStyle, useThemedStyle } from '../hook/useThemedStyle';
-import { CS } from '../style/CommonStyle';
+import { ThemedStyle, useThemedStyle } from '@src/hook/useThemedStyle';
+import { CS } from '@src/style/CommonStyle';
 import Animated, { 
     LinearTransition, 
     useSharedValue, 
@@ -12,27 +12,22 @@ import Animated, {
     withRepeat
 } from 'react-native-reanimated';
 import { useEffect } from 'react';
+import { flagsMap } from '@src/data/flags';
+import { currencyMap } from '@src/data/currencies';
 
 /**
- * CurrencyShortcut - A single item shortcut component for quick currency conversion
- * 
- * @param {Object} props
- * @param {string} props.fromCurrency - Source currency code
- * @param {string} props.toCurrency - Target currency code
- * @param {string} props.fromSign - Source currency symbol
- * @param {string} props.toSign - Target currency symbol
- * @param {string} props.fromFlag - Source currency flag emoji
- * @param {string} props.toFlag - Target currency flag emoji
- * @param {Function} props.onPress - Callback when the shortcut is pressed
- */
+ * A single item shortcut component for quick currency conversion
+*/
 export default function CurrencyShortcut({ 
     fromCurrency, 
     toCurrency,
-    fromFlag,
-    toFlag,
     deleting,
     onPress 
 }) {
+    const ts = useThemedStyle(tsf);
+    const fromFlag  = flagsMap[currencyMap[fromCurrency].users[0]] ?? '🌐';
+    const toFlag    = flagsMap[currencyMap[toCurrency].users[0]] ?? '🌐';
+
     const wobblingValue = useSharedValue(0);
     useEffect(()=>{
         if(deleting) {
@@ -55,9 +50,6 @@ export default function CurrencyShortcut({
             ]
         }
     });
-    const ts = useThemedStyle(tsf);
-    fromFlag = fromFlag || '🌐';
-    toFlag   = toFlag   || '🌐';
     return (
         <Animated.View exiting={ZoomOut.duration(200)} layout={LinearTransition.springify(200)}>
         <Animated.View style={[wobblingStyle]} >
@@ -104,9 +96,9 @@ const ss = StyleSheet.create({
     delete: {
         position: 'absolute',
         width: 32,
-        right: -12,
-        top: -12,
         height: 32,
+        right:  -12,
+        top:    -12,
         zIndex: 2
     },
     arrow: {
