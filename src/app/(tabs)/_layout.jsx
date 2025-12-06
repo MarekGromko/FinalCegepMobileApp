@@ -1,7 +1,9 @@
 import { Tabs} from 'expo-router'; 
 import { Ionicons } from '@expo/vector-icons';
 import { useThemedStyle, ThemedStyle } from '@src/hook/useThemedStyle';
-import { CS } from "@src/style/CommonStyle"
+import { CS } from "@src/style/CommonStyle";
+import * as NavigationBar from 'expo-navigation-bar';
+NavigationBar.setVisibilityAsync('hidden'); 
 
 const tsf = ThemedStyle((theme) => ({
     header: { backgroundColor: theme.backgroundPanel },

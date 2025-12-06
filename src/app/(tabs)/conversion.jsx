@@ -9,6 +9,7 @@ import { useThemedStyle, ThemedStyle } from '@src/hook/useThemedStyle';
 import { CS } from '@src/style/CommonStyle';
 import { assertUser } from '@src/hook/useUser';
 import { useLocalSearchParams } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 //Source picker : https://github.com/react-native-picker/picker
 
 export default function PageConversion() {
@@ -18,7 +19,8 @@ export default function PageConversion() {
     const [ inputValue, setInputValue] = useState(0);
     const [ convertedValue, setConvertedValue] = useState(0);
     const rate = getConversionRate(baseCurrency, convertToCurrency);
-
+    
+    //if(!assertUser()) return null;
     // added so that you can pass a base and convert currency as parameter to the root
     const { 
         baseCurrency: paramBaseCurrency, 
@@ -28,8 +30,7 @@ export default function PageConversion() {
         setBaseCurrency(paramBaseCurrency ?? "CAD");
         setConvertToCurrency(paramConvertToCurrency ?? "USD");
     }, [paramBaseCurrency, paramConvertToCurrency]);
-    ///
-    //if(!assertUser()) return null;
+
     
     return (
         <SafeAreaProvider style={[ss.page, ts.page]}> 
@@ -42,8 +43,8 @@ export default function PageConversion() {
                     </Picker>
                 </View>
 
-                <View>
-                    <Text style={[CS.Font.light, ss.toText, ts.text ]}> To </Text>
+                <View style={ss.arrow}>
+                    <Ionicons color={ts.primary.color} size={50} name="arrow-forward" />
                 </View>
                 <View style={ss.convertToCurrencyContainer}>
                     <Picker style={[ts.text, ts.item, ss.picker]} selectedValue={convertToCurrency}  onValueChange={(itemValue, itemIndex) => setConvertToCurrency(itemValue)}>
@@ -138,6 +139,9 @@ const ss = StyleSheet.create({
         width:250,
         borderStyle:"solid",
         borderWidth: 2,    
+    },
+    arrow: {
+        ...CS.margin(5)
     },
 });
 
