@@ -6,6 +6,7 @@ module.exports = function (api) {
             ["module-resolver", {
                 "alias": {
                     "@assets": "./assets",
+                    "@src": "./src"
                 },
                 "extensions": [
                     ".js",
@@ -13,6 +14,7 @@ module.exports = function (api) {
                     ".ttf"
                 ]
             }],
+            "react-native-worklets/plugin",
         ]
     };
 };

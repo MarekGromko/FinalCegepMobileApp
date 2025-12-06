@@ -1,6 +1,7 @@
 import { use, useState } from "react";
 import { Text, View, TextInput, Pressable} from "react-native";
 import { ThemedStyle, useThemedStyle } from "../hook/useThemedStyle";
+import { CS } from "../style/CommonStyle";
 
  
  
@@ -75,73 +76,61 @@ export default function SignUpPage() {
 }
  
 const themedStyles = ThemedStyle((theme) => ({
-        container: {
-        width: "400px",
-        height: "auto",
+    container: {
+        width: 400,
         backgroundColor: theme.blackBackground,
         alignSelf: "center",        
         marginTop: "auto",          
         marginBottom: "auto",
-         borderRadius: "9px",
-        border: "1px solide #D4D7E3",
-        
+        borderRadius: 9,
+        borderWidth: 1,
+        borderColor: theme.backgroundPanel
     },
     sub_header_title: {
-        paddingTop: "50px",
+        ...CS.Font.bold,
+        paddingTop: 50,
         color: theme.primary,
-        fontFamily: "Roboto",
-        fontSize: "24px",
-        fontStyle: "normal",
-        fontWeight: 600,
-        lineHeight: "100%",
-        letterSpacing: "0.24px",
-        textAlign:"center"
+        fontSize: 24,
+        //letterSpacing: "0.24px",
+        textAlign: "center"
     },
     title_02: {
+        ...CS.Font.regular,
         color: theme.primary,
         display: "flex",
-        fontFamily: "Roboto",
-        fontSize: "14px",
-        fontStyle: "normal", 
+        fontSize: 14,
     },
     sub_container: {
-        display: "flex",
-        flexDirection: "column",
+        ...CS.Flex.column(16),
         justifyContent: "center",
-        gap: "16px",
         alignSelf: "stretch",
-        padding: "20px"
+        padding: 20
     },
     input: {
-        width:"100%",
-        height: "42px",
+        ...CS.Font.regular,
+        width: "100%",
+        height: 42,
         flexShrink: 0,
         backgroundColor:theme.backgroundCard,
-        borderRadius: "9px",
-        border: "1px solide #D4D7E3",
-        
-        color:theme.text,
-        fontFamily: "Roboto",
-        fontSize: "14px",
-        fontStyle: "normal",
-        fontWeight: 400,
-        lineHeight: "100%",
-        letterSpacing: "0.14px",
-        padding: "13px",
+        borderRadius: 9,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: theme.backgroundPanel,
+        color: theme.text,
+        fontSize: 14,
+        //letterSpacing: "0.14px",
+        padding: 13,
     },
     btn_01: {
-        height: "40px",
-        display: "flex",
+        ...CS.Font.bold,
+        ...CS.Flex.centeredRow(),
+        height: 40,
         justifyContent: "center",
-        alignItems: "center",
-        borderRadius: "12px",
+        borderRadius: 12,
         backgroundColor:theme.primary,
-        minwidth:"100%",
-        marginTop:"20px",
-        marginBottom:"20px"
-        
- 
- 
+        minwidth: "100%",
+        marginTop:    20,
+        marginBottom: 20
     }
 })
 )

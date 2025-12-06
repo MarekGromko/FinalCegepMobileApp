@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
-import { View, TouchableOpacity, Image, FlatList, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, FlatList, Text, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
-import SearchbarComponent from '../components/SearchComponent';
-import { useThemedStyle, ThemedStyle } from '../hook/useThemedStyle';
-import { CS } from '../style/CommonStyle';
-import { currencyList } from '../data/currencies';
-import { flagsMap } from '../data/flags';
-import en from '../i18n/en.json';
+import SearchbarComponent from '@src/component/SearchComponent';
+import { useThemedStyle, ThemedStyle } from '@src/hook/useThemedStyle';
+import { CS } from '@src/style/CommonStyle';
+import { currencyList } from '@src/data/currencies';
+import { flagsMap } from '@src/data/flags';
+import { assertUser } from '@src/hook/useUser';
+import en from '@src/i18n/en.json';
 
 const stylesFactory = ThemedStyle((theme) => ({
     container: {
@@ -65,9 +66,10 @@ export default function Search() {
     const styles = useThemedStyle(stylesFactory);
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
+    if(!assertUser()) return null;
 
     const filteredCurrencies = searchQuery.trim() === '' 
-        ? [] 
+        ? currencyList 
         : currencyList.filter(item => 
             item.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
             (en.currencies[item.code] && en.currencies[item.code].toLowerCase().includes(searchQuery.toLowerCase()))
@@ -106,6 +108,7 @@ export default function Search() {
             </TouchableOpacity>
         );
     };
+    if(!assertUser()) return null;
 
     return (
         <View style={styles.container}>
