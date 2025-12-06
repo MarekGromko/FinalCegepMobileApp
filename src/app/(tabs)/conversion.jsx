@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Picker } from "@react-native-picker/picker"
-import { convertingCurrency, getConversionRate } from '../components/conversionComponents';
-import { currencyList, currencyMap } from '../data/currencies';
-import  { flagsMap } from "../data/flags";
-import { useThemedStyle, ThemedStyle } from '../hook/useThemedStyle';
-import { CS } from '../style/CommonStyle';
+import { convertingCurrency, getConversionRate } from '@src/component/conversionComponents';
+import { currencyList, currencyMap } from '@src/data/currencies';
+import { flagsMap } from "@src/data/flags";
+import { useThemedStyle, ThemedStyle } from '@src/hook/useThemedStyle';
+import { CS } from '@src/style/CommonStyle';
+import { assertUser } from '@src/hook/useUser';
+import { useLocalSearchParams } from 'expo-router';
 //Source picker : https://github.com/react-native-picker/picker
 
 export default function PageConversion() {
@@ -17,6 +19,18 @@ export default function PageConversion() {
     const [ convertedValue, setConvertedValue] = useState(0);
     const rate = getConversionRate(baseCurrency, convertToCurrency);
 
+    // added so that you can pass a base and convert currency as parameter to the root
+    const { 
+        baseCurrency: paramBaseCurrency, 
+        convertToCurrency: paramConvertToCurrency
+    } = useLocalSearchParams()
+    useEffect(()=>{
+        setBaseCurrency(paramBaseCurrency ?? "CAD");
+        setConvertToCurrency(paramConvertToCurrency ?? "USD");
+    }, [paramBaseCurrency, paramConvertToCurrency]);
+    ///
+    //if(!assertUser()) return null;
+    
     return (
         <SafeAreaProvider style={[ss.page, ts.page]}> 
             <View id='currenciesChoice' style={[ss.choiceCurrencies, ts.container]}>
