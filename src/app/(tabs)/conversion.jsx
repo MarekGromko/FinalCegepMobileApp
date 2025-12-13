@@ -34,8 +34,8 @@ export default function PageConversion() {
     
     return (
         <SafeAreaProvider style={[ss.page, ts.page]}> 
-            <View id='currenciesChoice' style={[ss.choiceCurrencies, ts.container]}>
-                <View style={ss.baseCurrencyContainer}>
+            <View id='currenciesChoice' style={[ss.boxes, ts.container]}>
+                <View style={[ss.pickerView, ts.container]}>
                     <Picker style={[ss.picker, ts.text, ts.item]} selectedValue={baseCurrency} onValueChange={(itemValue, itemIndex) => setBaseCurrency(itemValue)}>
                         {currencyList.map(item => (
                             <Picker.Item style={{fontSize:20}} label={`${flagsMap[item.users[0]]} ${item.code}`} value={item.code} key={item.code}></Picker.Item>
@@ -46,7 +46,7 @@ export default function PageConversion() {
                 <View style={ss.arrow}>
                     <Ionicons color={ts.primary.color} size={50} name="arrow-forward" />
                 </View>
-                <View style={ss.convertToCurrencyContainer}>
+                <View style={[ss.pickerView, ts.container]}>
                     <Picker style={[ts.text, ts.item, ss.picker]} selectedValue={convertToCurrency}  onValueChange={(itemValue, itemIndex) => setConvertToCurrency(itemValue)}>
                         {currencyList.map(item => (
                             <Picker.Item style={{fontSize:20}} label={`${flagsMap[item.users[0]]} ${item.code}`} value={item.code} key={item.code}></Picker.Item>
@@ -54,7 +54,7 @@ export default function PageConversion() {
                     </Picker>
                 </View>
             </View>
-            <View id='values' style={[ts.container]}>
+            <View id='values' style={[ts.container, ss.boxes]}>
                 <View  >
                     <View id='userInput' style={ss.userInput}>
                         <TextInput style={[ss.textInput, ts.text, ts.item,ss.item]} placeholder='Insert the amount to convert' placeholderTextColor={ts.text.color} inputMode='decimal' maxLength={10} onChangeText={setInputValue}></TextInput>
@@ -63,10 +63,9 @@ export default function PageConversion() {
                     </TouchableOpacity>
                     </View>
                     <View id='informationOutput' style={ss.informationOutput}>
-                        <Text style={[CS.Font.light, ts.text, ts.item, ss.item]}>Rate : {rate}</Text>
-                        <Text style={[CS.Font.light, ts.item, ss.item, ts.primaryShade]}>{currencyMap[convertToCurrency].sign}{convertedValue}</Text>
+                        <Text style={[CS.Font.light, ts.item, ss.item]}>Rate : {rate}</Text>
+                        <Text style={[CS.Font.light, ts.item, ss.item, ts.primaryShade ]}>{currencyMap[convertToCurrency].sign}{convertedValue}</Text>
                     </View>
-                    
                 </View>
             </View>
         </SafeAreaProvider>
@@ -98,31 +97,32 @@ const ss = StyleSheet.create({
     },
     picker: {
         fontSize: 20,
-        borderRadius:5,
-        borderStyle:"solid",
         fontWeight:"bold",
         ...CS.padding(5),
         width:150,
     },
-
-    choiceCurrencies: {
-        ...CS.Flex.row(20),
-        marginTop:20,
+    pickerView: {
+        borderStyle:"solid",
+        borderWidth:2,
+        borderRadius:0,
+    },
+    boxes: {
+        marginTop:25,
         marginBottom:20,
-        padding:50,
-        width: "fit-content",
         justifyContent:"center",
+        ...CS.Flex.row(16),
+        alignItems: 'center',
+        ...CS.padding(15),
+        borderRadius: 12,
     },
     touchableOpacity: {
-        borderWidth:2,
-        borderStyle:"dashed",
+        borderStyle:"solid",
     },
     userInput: {
         ...CS.Flex.row(10),
         width:400,
         marginTop:20,
         justifyContent:"center",
-
     }, 
     informationOutput: {
         ...CS.Flex.row(10),
@@ -151,11 +151,15 @@ const tsf = ThemedStyle((theme) => ({
         backgroundColor: theme.background,
     },
     item: {
-        backgroundColor: theme.backgroundPanel,
-        borderColor: theme.backgroundCard,
+        backgroundColor: theme.backgroundCard,
+        borderColor: theme.backgroundPanel,
+        borderWidth:1,
+        borderRadius:5,
     },
     container: {
-        backgroundColor: theme.backgroundCard, 
+        backgroundColor: theme.backgroundPanel,
+        borderColor: theme.backgroundCard,
+        borderWidth:1,
     },
     text: {
         color: theme.text,
@@ -169,5 +173,6 @@ const tsf = ThemedStyle((theme) => ({
     },
     primaryShade: {
         color: theme.primaryShade,
+        borderColor: theme.primaryShade,
     },
 }));
