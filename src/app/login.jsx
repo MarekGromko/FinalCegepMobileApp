@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { Text, View, TextInput, Animated } from "react-native";
-import { ThemedStyle, useThemedStyle } from "../hook/useThemedStyle";
+import { ThemedStyle, useThemedStyle } from "@src/hook/useThemedStyle";
 import { useUser } from "../hook/useUser";
 import { useRouter } from "expo-router";
-
+import { fakeUser } from "../data/fakeUser";
 const AnimatedPressable = Animated.createAnimatedComponent(require("react-native").Pressable);
 
 export default function LoginScreen() {
@@ -13,9 +13,22 @@ export default function LoginScreen() {
     const [password, setPassword] = useState("");
     const router = useRouter()
 
+    // const handleLogin = () => {
+    //     user.logIn(email, password);
+    //     router.navigate("/search");
+    // };
+
+
     const handleLogin = () => {
-        user.logIn(email, password);
-        router.navigate("/search");
+        if (
+            email === fakeUser.email &&
+            password === fakeUser.password
+        ) {
+            user.logIn(fakeUser.id, fakeUser.name);
+            router.replace("/search");
+        } else {
+            alert("Email ou mot de passe incorrect");
+        }
     };
 
     const scale = useRef(new Animated.Value(1)).current;
