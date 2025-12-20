@@ -66,8 +66,7 @@ export default function Search() {
     const styles = useThemedStyle(stylesFactory);
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
-    const isLogged = useAssertUser();
-    if(!isLogged) return null;
+    const userAssertion = useAssertUser();
 
     const filteredCurrencies = searchQuery.trim() === '' 
         ? currencyList 
@@ -109,9 +108,8 @@ export default function Search() {
             </TouchableOpacity>
         );
     };
-    if(!isLogged) return null;
 
-    return (
+    return userAssertion ?? (
         <View style={styles.container}>
             <View style={styles.headerSection}>
                 <View style={styles.headerRow}>

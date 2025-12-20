@@ -19,9 +19,9 @@ export default function LoginScreen() {
 
     const animatePress = () => {
         Animated.sequence([
-            Animated.timing(scale, { toValue: 0.9, duration: 150, useNativeDriver: true }),
-            Animated.timing(scale, { toValue: 1, duration: 150, useNativeDriver: true })
-        ]).start();
+            Animated.timing(scale, { toValue: 0.9, duration: 150, useNativeDriver: false }),
+            Animated.timing(scale, { toValue: 1, duration: 150, useNativeDriver: false })
+        ]).start()
     };
     const handleLogin = () => {
         if (email === fakeUser.email && password === fakeUser.password) {

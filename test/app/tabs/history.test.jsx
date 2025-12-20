@@ -17,7 +17,7 @@ jest.mock('@src/hook/useThemedStyle', () => ({
     ThemedStyle: jest.fn((fn) => fn),
 }));
 jest.mock('@src/hook/useUser', () => ({
-    assertUser: jest.fn(() => true),
+    useAssertUser: jest.fn(() => null),
 }));
 // comps
 jest.mock('@src/component/HistoryEntry', () => 'HistoryComps');
