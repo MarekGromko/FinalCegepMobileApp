@@ -4,6 +4,7 @@ import { ThemedStyle, useThemedStyle } from "@src/hook/useThemedStyle";
 import { useUser } from "../hook/useUser";
 import { useRouter } from "expo-router";
 import { fakeUser } from "../data/fakeUser";
+
 const AnimatedPressable = Animated.createAnimatedComponent(require("react-native").Pressable);
 
 export default function LoginScreen() {
@@ -11,27 +12,10 @@ export default function LoginScreen() {
     const style = useThemedStyle(themedStyles);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter()
-
-    // const handleLogin = () => {
-    //     user.logIn(email, password);
-    //     router.navigate("/search");
-    // };
-
-
-    const handleLogin = () => {
-        if (
-            email === fakeUser.email &&
-            password === fakeUser.password
-        ) {
-            user.logIn(fakeUser.id, fakeUser.name);
-            router.replace("/search");
-        } else {
-            alert("Email ou mot de passe incorrect");
-        }
-    };
+    const router = useRouter();
 
     const scale = useRef(new Animated.Value(1)).current;
+    const colorAnim = useRef(new Animated.Value(0)).current;
 
     const animatePress = () => {
         Animated.sequence([
@@ -39,6 +23,38 @@ export default function LoginScreen() {
             Animated.timing(scale, { toValue: 1, duration: 150, useNativeDriver: true })
         ]).start();
     };
+    const handleLogin = () => {
+        if (email === fakeUser.email && password === fakeUser.password) {
+            user.logIn(fakeUser.id, fakeUser.name);
+
+            Animated.timing(colorAnim, {
+                toValue: 1,
+                duration: 300,
+                useNativeDriver: false,
+            }).start(() => {
+                setTimeout(() => router.replace("/search"), 300);
+            });
+        } else {
+            Animated.timing(colorAnim, {
+                toValue: -1,
+                duration: 300,
+                useNativeDriver: false,
+            }).start(() => {
+                alert("Email ou mot de passe incorrect");
+                setTimeout(() => {
+                    Animated.timing(colorAnim, {
+                        toValue: 0,
+                        duration: 300,
+                        useNativeDriver: false,
+                    }).start();
+                }, 1000);
+            });
+        }
+    };
+    const buttonColor = colorAnim.interpolate({
+        inputRange: [-1, 0, 1],
+        outputRange: ["red", style.btn_01.backgroundColor, "green"],
+    });
 
     return (
         <View style={style.container}>
@@ -50,8 +66,7 @@ export default function LoginScreen() {
                     style={style.input}
                     placeholder="Enter an Email"
                     onChangeText={setEmail}
-                    value={email}
-                />
+                    value={email} />
 
                 <Text style={style.title_02}>Password</Text>
                 <TextInput
@@ -64,13 +79,12 @@ export default function LoginScreen() {
                 <AnimatedPressable
                     style={[
                         style.btn_01,
-                        { transform: [{ scale }] }
+                        { transform: [{ scale }], backgroundColor: buttonColor }
                     ]}
                     onPress={() => {
                         animatePress();
                         handleLogin();
-                    }}
-                >
+                    }}>
                     <Text style={{ color: "#000" }}>Login</Text>
                 </AnimatedPressable>
             </View>
@@ -89,7 +103,6 @@ const themedStyles = ThemedStyle((theme) => ({
         borderWidth: 1,
         borderColor: "#D4D7E3",
     },
-
     sub_header_title: {
         paddingTop: 50,
         color: theme.primary,
@@ -97,19 +110,16 @@ const themedStyles = ThemedStyle((theme) => ({
         fontWeight: "600",
         textAlign: "center",
     },
-
     title_02: {
         color: theme.primary,
         fontSize: 14,
     },
-
     sub_container: {
         display: "flex",
         flexDirection: "column",
         gap: 16,
         padding: 20,
     },
-
     input: {
         width: "100%",
         height: 42,
@@ -120,7 +130,6 @@ const themedStyles = ThemedStyle((theme) => ({
         padding: 13,
         color: theme.text,
     },
-
     btn_01: {
         height: 40,
         justifyContent: "center",
