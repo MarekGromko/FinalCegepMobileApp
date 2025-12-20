@@ -1,4 +1,11 @@
-import { StyleSheet, TouchableOpacity, View, Text, Alert, FlatList } from "react-native";
+import { 
+    StyleSheet, 
+    TouchableOpacity, 
+    View, 
+    Text, 
+    Alert, 
+    FlatList 
+} from "react-native";
 import { useState } from "react";
 import { ThemedStyle, useThemedStyle } from "@src/hook/useThemedStyle";
 import { useRerender } from     "@src/hook/useRerender";
@@ -6,8 +13,6 @@ import { assertUser } from      '@src/hook/useUser';
 import { CS } from              "@src/style/CommonStyle";
 import HistoryEntry from        "@src/component/HistoryEntry";
 import CurrencyShortcut from    "@src/component/CurrencyShortcut";
-import { flagsMap } from        "@src/data/flags";
-import { currencyMap } from     "@src/data/currencies";
 import shortcuts from           "@src/data/shortcuts";
 import history from             "@src/data/history";
 import { useRouter } from "expo-router";
