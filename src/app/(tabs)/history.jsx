@@ -1,13 +1,18 @@
-import { StyleSheet, TouchableOpacity, View, Text, Alert, FlatList } from "react-native";
+import { 
+    StyleSheet, 
+    TouchableOpacity, 
+    View, 
+    Text, 
+    Alert, 
+    FlatList 
+} from "react-native";
 import { useState } from "react";
 import { ThemedStyle, useThemedStyle } from "@src/hook/useThemedStyle";
 import { useRerender } from     "@src/hook/useRerender";
-import { assertUser } from      '@src/hook/useUser';
+import { useAssertUser } from      '@src/hook/useUser';
 import { CS } from              "@src/style/CommonStyle";
 import HistoryEntry from        "@src/component/HistoryEntry";
 import CurrencyShortcut from    "@src/component/CurrencyShortcut";
-import { flagsMap } from        "@src/data/flags";
-import { currencyMap } from     "@src/data/currencies";
 import shortcuts from           "@src/data/shortcuts";
 import history from             "@src/data/history";
 import { useRouter } from "expo-router";
@@ -28,7 +33,7 @@ export default function ShortcutStack() {
     const rerender = useRerender();
     const [deleting, setDeleting] = useState(false);
     const router = useRouter();
-    if(!assertUser()) return null;
+    const assertUser = useAssertUser()
 
     const handleShortcutPress = (from, to) => {
         const index = shortcuts.findIndex(s => s.from === from && s.to === to);
@@ -56,7 +61,7 @@ export default function ShortcutStack() {
         setDeleting(!deleting);
     }
 
-    return (
+    return assertUser ?? (
         <View style={[ss.container, ts.container]}>
             <View style={ss.titleSection}>
                 <Text style={[ss.title, ts.title]}>Shortcuts</Text>

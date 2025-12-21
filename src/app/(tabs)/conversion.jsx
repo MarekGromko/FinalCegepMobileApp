@@ -7,7 +7,7 @@ import { currencyList, currencyMap } from '@src/data/currencies';
 import { flagsMap } from "@src/data/flags";
 import { useThemedStyle, ThemedStyle } from '@src/hook/useThemedStyle';
 import { CS } from '@src/style/CommonStyle';
-import { assertUser } from '@src/hook/useUser';
+import { useAssertUser } from '@src/hook/useUser';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 //Source picker : https://github.com/react-native-picker/picker
@@ -19,9 +19,7 @@ export default function PageConversion() {
     const [ inputValue, setInputValue] = useState(0);
     const [ convertedValue, setConvertedValue] = useState(0);
     const rate = getConversionRate(baseCurrency, convertToCurrency);
-    
-    //if(!assertUser()) return null;
-    // added so that you can pass a base and convert currency as parameter to the root
+    const assertUser = useAssertUser();
     const { 
         baseCurrency: paramBaseCurrency, 
         convertToCurrency: paramConvertToCurrency
@@ -30,9 +28,8 @@ export default function PageConversion() {
         setBaseCurrency(paramBaseCurrency ?? "CAD");
         setConvertToCurrency(paramConvertToCurrency ?? "USD");
     }, [paramBaseCurrency, paramConvertToCurrency]);
-
     
-    return (
+    return assertUser ?? (
         <SafeAreaProvider style={[ss.page, ts.page]}> 
             <View id='currenciesChoice' style={[ss.boxes, ts.container]}>
                 <View style={[ss.pickerView, ts.container]}>

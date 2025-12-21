@@ -6,7 +6,7 @@ import { useThemedStyle, ThemedStyle } from '@src/hook/useThemedStyle';
 import { CS } from '@src/style/CommonStyle';
 import { currencyList } from '@src/data/currencies';
 import { flagsMap } from '@src/data/flags';
-import { assertUser } from '@src/hook/useUser';
+import { useAssertUser } from '@src/hook/useUser';
 import en from '@src/i18n/en.json';
 
 const stylesFactory = ThemedStyle((theme) => ({
@@ -66,7 +66,7 @@ export default function Search() {
     const styles = useThemedStyle(stylesFactory);
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState('');
-    if(!assertUser()) return null;
+    const userAssertion = useAssertUser();
 
     const filteredCurrencies = searchQuery.trim() === '' 
         ? currencyList 
@@ -108,9 +108,8 @@ export default function Search() {
             </TouchableOpacity>
         );
     };
-    if(!assertUser()) return null;
 
-    return (
+    return userAssertion ?? (
         <View style={styles.container}>
             <View style={styles.headerSection}>
                 <View style={styles.headerRow}>

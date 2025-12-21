@@ -33,6 +33,12 @@ export default function TabLayout() {
                 headerTitleStyle: { ...CS.Font.bold }
             }}
         >
+            <Tabs.Screen 
+                name="index" 
+                options={{
+                    href: null
+                }}
+            />
             <Tabs.Screen
                 name="search"
                 options={{
@@ -52,6 +58,14 @@ export default function TabLayout() {
                 options={{
                     title: 'Shortcuts',
                     tabBarIcon: ({ color }) => (<Ionicons name="star" color={color} size={32} />)
+                }}
+            />
+
+            <Tabs.Screen
+                name="settings"
+                options={{
+                    title: 'Settings',
+                    tabBarIcon: ({ color }) => (<Ionicons name="settings-outline" color={color} size={32} />)
                 }}
             />
         </Tabs>
