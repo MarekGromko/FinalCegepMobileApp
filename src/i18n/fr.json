@@ -1,0 +1,22 @@
+{
+    "tabs": {
+        "history": "Historique",
+        "conversion": "Conversion",
+        "shortcuts": "Raccourcis",
+        "search": "Recherche",
+        "settings": "Paramètres",
+        "details": "Détails",
+        "login": "Connexion",
+        "signup": "Inscription"
+    },
+    "settings": {
+        "loggedInAs": "Connecté en tant que",
+        "settings": "Paramètres",
+        "language": "Langue",
+        "theme": "Thème",
+        "light": "Claire",
+        "dark": "Sombre",
+        "signup": "S'inscrire",
+        "logout": "Se déconnecter"
+    }
+}
