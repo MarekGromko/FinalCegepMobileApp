@@ -2,6 +2,8 @@ import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import Search from "@src/app/(tabs)/search";
 import { currencyList } from "@src/data/currencies";
+import en from "@src/i18n/en.json";
+import { flagsMap } from "@src/data/flags";
 
 const mockPush = jest.fn();
 
