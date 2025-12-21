@@ -3,7 +3,8 @@ import {
     TouchableOpacity, 
     View, 
     Text, 
-    Alert
+    Alert,
+    Image
 } from "react-native";
 import { useState, useContext } from "react";
 import { ThemedStyle, useThemedStyle } from "@src/hook/useThemedStyle";
@@ -13,6 +14,7 @@ import { useRouter } from "expo-router";
 import { ThemeContext } from "@src/context/ThemeContext";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Settings() {
     const ts = useThemedStyle(tsf);
@@ -53,6 +55,24 @@ export default function Settings() {
         themeContext.setTheme(theme);
     };
 
+    const handlePicChange = async () => {
+        if(!(await ImagePicker.requestMediaLibraryPermissionsAsync()).granted) {
+            Alert.alert("Permission denied", "We need permission to access your photo library to change your profile picture.");
+            return;
+        };
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ['images'],
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+        
+        if (!result.canceled) {
+            user.setUserPic(result.assets[0].uri);
+        }
+    }
+
+
     return (
         <View style={[ss.container, ts.container]}>
             {/* user info */}
@@ -62,7 +82,9 @@ export default function Settings() {
                     <Text style={[ss.userName, ts.textBold]}>{user.userName || "Guest"}</Text>
                 </View>
                 <View>
-                    <Text style={[ss.userId, ts.textDim]}>ID: {user.userId || "N/A"}</Text>
+                    <TouchableOpacity onPress={handlePicChange}>
+                        <Image source={{ uri: user.userPic || "default_image_uri" }} style={ss.userPic} />
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -200,8 +222,11 @@ const ss = StyleSheet.create({
         fontSize: 24,
         marginBottom: 4,
     },
-    userId: {
-        fontSize: 12,
+    userPic: {
+        width: 64,
+        height: 64,
+        borderRadius: 32,
+        backgroundColor: "#CCCCCC",
     },
     settingsSection: {
         flex: 1,
