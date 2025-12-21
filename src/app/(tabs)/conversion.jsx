@@ -161,9 +161,6 @@ const tsf = ThemedStyle((theme) => ({
     text: {
         color: theme.text,
     },
-    textDim: {
-        color: theme.textDim,
-    },
     primary: {
         color: theme.primary,
         borderColor: theme.primary
