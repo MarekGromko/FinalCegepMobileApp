@@ -398,5 +398,25 @@
         "YE": "Yemen",
         "ZM": "Zambia",
         "ZW": "Zimbabwe"
+    },
+    "tabs": {
+        "history": "History",
+        "conversion": "Conversion",
+        "shortcuts": "Shortcuts",
+        "search": "Search",
+        "settings": "Settings",
+        "details": "Details",
+        "login": "Login",
+        "signup": "Sign Up"
+    },
+    "settings": {
+        "loggedInAs": "Logged in as",
+        "settings": "Settings",
+        "language": "Language",
+        "theme": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "signup": "Sign Up",
+        "logout": "Logout"
     }
 }

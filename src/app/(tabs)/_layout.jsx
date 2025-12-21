@@ -1,9 +1,10 @@
 import { Tabs} from 'expo-router'; 
 import { Ionicons } from '@expo/vector-icons';
 import { useThemedStyle, ThemedStyle } from '@src/hook/useThemedStyle';
-import { CS } from "@src/style/CommonStyle";
-import * as NavigationBar from 'expo-navigation-bar';
-NavigationBar.setVisibilityAsync('hidden'); 
+import { CS } from "@src/style/CommonStyle"
+import { useTranslation } from 'react-i18next';
+
+const SIZE_ICONS = 24;
 
 const tsf = ThemedStyle((theme) => ({
     header: { backgroundColor: theme.backgroundPanel },
@@ -15,6 +16,7 @@ const tsf = ThemedStyle((theme) => ({
 
 export default function TabLayout() {
     const ts = useThemedStyle(tsf);
+    const { t } = useTranslation();
     return (
         <Tabs
             initialRouteName="search"
@@ -42,30 +44,30 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="search"
                 options={{
-                    title: 'Search',
-                    tabBarIcon: ({color}) => (<Ionicons name="search" color={color} size={32}/>),
+                    title: t("tabs:search"),
+                    tabBarIcon: ({color}) => (<Ionicons name="search" color={color} size={SIZE_ICONS}/>),
                 }}
             />
             <Tabs.Screen
                 name="conversion"
                 options={{
-                    title: 'Conversion',
-                    tabBarIcon: ({ color }) => (<Ionicons name="repeat" color={color} size={32} />)
+                    title: t("tabs:conversion"),
+                    tabBarIcon: ({ color }) => (<Ionicons name="repeat" color={color} size={SIZE_ICONS} />)
                 }}
             />
             <Tabs.Screen
                 name="history"
                 options={{
-                    title: 'Shortcuts',
-                    tabBarIcon: ({ color }) => (<Ionicons name="star" color={color} size={32} />)
+                    title: t("tabs:history"),
+                    tabBarIcon: ({ color }) => (<Ionicons name="star" color={color} size={SIZE_ICONS} />)
                 }}
             />
 
             <Tabs.Screen
                 name="settings"
                 options={{
-                    title: 'Settings',
-                    tabBarIcon: ({ color }) => (<Ionicons name="settings-outline" color={color} size={32} />)
+                    title: t("tabs:settings"),
+                    tabBarIcon: ({ color }) => (<Ionicons name="settings-outline" color={color} size={SIZE_ICONS} />)
                 }}
             />
         </Tabs>

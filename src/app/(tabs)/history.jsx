@@ -19,7 +19,7 @@ import { useRouter } from "expo-router";
 
 var alertDeleteShorcut = (onConfirm = ()=>{}, onCancel = ()=>{})=> {
     Alert.alert(
-        "Delete shortcu",
+        "Delete shortcut",
         "Are you sure you want to delete this shortcut?",
         [
             { text: "Delete", onPress: onConfirm, style: "ok" },
