@@ -418,5 +418,10 @@
         "dark": "Dark",
         "signup": "Sign Up",
         "logout": "Logout"
+    },
+    "conversion": {
+        "insertTheAmountToConvert": "Insert the amount to convert",
+        "enter": "Enter",
+        "rate": "Rate"
     }
 }

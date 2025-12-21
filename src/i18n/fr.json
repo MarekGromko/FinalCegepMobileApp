@@ -18,5 +18,10 @@
         "dark": "Sombre",
         "signup": "S'inscrire",
         "logout": "Se déconnecter"
+    },
+    "conversion": {
+        "insertTheAmountToConvert": "Insérer le montant à convertir",
+        "enter": "Entrer",
+        "rate": "Taux"
     }
 }

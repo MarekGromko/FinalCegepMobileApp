@@ -10,10 +10,12 @@ import { CS } from '@src/style/CommonStyle';
 import { useAssertUser } from '@src/hook/useUser';
 import { useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from "react-i18next";
 //Source picker : https://github.com/react-native-picker/picker
 
 export default function PageConversion() {
     const ts = useThemedStyle(tsf);
+    const { t } = useTranslation("conversion");
     const [ baseCurrency, setBaseCurrency ] = useState("CAD");
     const [ convertToCurrency, setConvertToCurrency] = useState("USD");
     const [ inputValue, setInputValue] = useState(0);
@@ -54,13 +56,13 @@ export default function PageConversion() {
             <View id='values' style={[ts.container, ss.boxes]}>
                 <View  >
                     <View id='userInput' style={ss.userInput}>
-                        <TextInput style={[ss.textInput, ts.text, ts.item,ss.item]} placeholder='Insert the amount to convert' placeholderTextColor={ts.text.color} inputMode='decimal' maxLength={10} onChangeText={setInputValue}></TextInput>
+                        <TextInput style={[ss.textInput, ts.text, ts.item,ss.item]} placeholder={t("conversion:insertTheAmountToConvert")} placeholderTextColor={ts.text.color} inputMode='decimal' maxLength={10} onChangeText={setInputValue}></TextInput>
                         <TouchableOpacity style={[ts.item,ss.touchableOpacity, ts.primary]} activeOpacity={0.7} onPress={() => setConvertedValue(convertingCurrency(rate, inputValue))}>
-                        <Text style={[ts.primary, ss.item]}>Enter</Text>
+                        <Text style={[ts.primary, ss.item]}>{t("conversion:enter")}</Text>
                     </TouchableOpacity>
                     </View>
                     <View id='informationOutput' style={ss.informationOutput}>
-                        <Text style={[CS.Font.light, ts.item, ss.item]}>Rate : {rate}</Text>
+                        <Text style={[CS.Font.light, ts.item, ss.item]}>{t("conversion:rate")} : {rate}</Text>
                         <Text style={[CS.Font.light, ts.item, ss.item, ts.primaryShade ]}>{currencyMap[convertToCurrency].sign}{convertedValue}</Text>
                     </View>
                 </View>
