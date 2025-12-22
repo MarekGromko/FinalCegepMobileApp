@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay, Easing } from 'react-native-reanimated';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
 import { currencyList } from '../../data/currencies';
 import { flagsMap } from '../../data/flags';
@@ -11,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 const getCurrencyDetails = (code) => currencyList.find(c => c.code === code);
 
 export default function CurrencyDetailsScreen() {
+    const router = useRouter();
     const { code } = useLocalSearchParams();
     const ts = useThemedStyle(tsf);
     
@@ -27,15 +30,51 @@ export default function CurrencyDetailsScreen() {
     const name = en.currencies[currency.code] ?? currency.code;
     const countryFlags = currency.users.map(countryCode => flagsMap[countryCode] || '❓');
 
+    const headerY = useSharedValue(-40);
+    const headerOpacity = useSharedValue(0);
+
+    const contentY = useSharedValue(40);
+    const contentOpacity = useSharedValue(0);
+
+    const headerStyle = useAnimatedStyle(() => ({
+        opacity: headerOpacity.value,
+        transform: [{ translateY: headerY.value }],
+    }));
+
+    const contentStyle = useAnimatedStyle(() => ({
+        opacity: contentOpacity.value,
+        transform: [{ translateY: contentY.value }],
+    }));
+
+    useEffect(() => {
+        headerY.value = withTiming(0, {
+            duration: 450,
+            easing: Easing.out(Easing.exp),
+        });
+        headerOpacity.value = withTiming(1, { duration: 300 });
+
+        contentY.value = withDelay(
+            120,
+            withTiming(0, {
+                duration: 450,
+                easing: Easing.out(Easing.exp),
+            })
+        );
+        contentOpacity.value = withDelay(120, withTiming(1, { duration: 300 }));
+    }, []);
+
     return (
-        <View style={[ss.page, ts.page]}>
-            <ScrollView contentContainerStyle={ss.container}>
+        <Animated.View style={[ss.headerCard, ts.card, headerStyle]}>
+            <TouchableOpacity onPress={() => router.back()} style={[ss.backButton, ts.card]} activeOpacity={0.7}>
+                <Ionicons name="arrow-back" size={22} color={ts.text.color}/>
+            </TouchableOpacity>
+            <ScrollView contentContainerStyle={ss.container} showsVerticalScrollIndicator={false}>
                 <View style={[ss.headerCard, ts.card]}>
                     <Text style={[ss.currencyCode, CS.Font.bold, ts.primary]}>{currency.code}</Text>
                     <Text style={[ss.currencyName, CS.Font.light, ts.text]}>{name}</Text>
                     <Text style={[ss.currencySign, CS.Font.regular, ts.textDim]}>({currency.sign})</Text>
                 </View>
-                <View style={[ss.detailCard, ts.card]}>
+                <Animated.View style={[ss.detailCard, ts.card, contentStyle]}>
                     <Text style={[ss.detailTitle, CS.Font.medium, ts.text]}>Countries Using This Currency</Text>
                     <View style={ss.flagsGrid}>
                         {countryFlags.map((flag, index) => (
@@ -49,19 +88,19 @@ export default function CurrencyDetailsScreen() {
                             No specific countries listed (e.g., precious metals, virtual currencies).
                         </Text>
                     )}
-                </View>
-
-                <TouchableOpacity style={[ss.detailCard, ts.card, ss.conversionButton]}>
-                     <View style={CS.Flex.centeredRow(10)}>
-                        <Ionicons name="swap-horizontal" size={24} color={ts.primary.color} />
-                        <Text style={[CS.Font.bold, ts.primary, ss.conversionText]}>
-                            Calculate Conversion Rate
-                        </Text>
-                     </View>
-                </TouchableOpacity>
-
+                </Animated.View>
+                <Animated.View style={contentStyle}>
+                    <TouchableOpacity style={[ss.detailCard, ts.card, ss.conversionButton]} onPress={() => router.push({pathname:`../(tabs)/conversion`, params: {baseCurrency: currency.code}})}>
+                         <View style={CS.Flex.centeredRow(10)}>
+                            <Ionicons name="swap-horizontal" size={24} color={ts.primary.color} />
+                            <Text style={[CS.Font.bold, ts.primary, ss.conversionText]}>
+                                Calculate Conversion Rate
+                            </Text>
+                         </View>
+                    </TouchableOpacity>
+                </Animated.View>
             </ScrollView>
-        </View>
+        </Animated.View>
     );
 }
 
@@ -118,7 +157,15 @@ const ss = StyleSheet.create({
     },
     conversionText: {
         fontSize: 18,
-    }
+    },
+    backButton: {
+        position: 'absolute',
+        top: 16,
+        left: 16,
+        zIndex: 10,
+        borderRadius: 999,
+        padding: 10,
+    },
 });
 
 const tsf = ThemedStyle((theme) => ({
