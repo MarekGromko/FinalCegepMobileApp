@@ -23,5 +23,9 @@
         "insertTheAmountToConvert": "Insérer le montant à convertir",
         "enter": "Entrer",
         "rate": "Taux"
+    },
+    "details": {
+        "CountriesUsingThisCurrency" : "Pays utilisant cette devise",
+        "CalculateConversionRate" : "Calculer taux de conversion"
     }
 }
