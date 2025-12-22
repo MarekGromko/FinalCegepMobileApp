@@ -25,7 +25,7 @@
         "rate": "Taux"
     },
     "details": {
-        "CountriesUsingThisCurrency" : "Pays utilisant cette monnaie",
-        "CalculateConversionRate" : "Calculer le taux de conversion"
+        "CountriesUsingThisCurrency" : "Pays utilisant cette devise",
+        "CalculateConversionRate" : "Calculer taux de conversion"
     }
 }
