@@ -14,6 +14,7 @@ import { useRouter } from "expo-router";
 import { ThemeContext } from "@src/context/ThemeContext";
 import i18n from "i18next";
 import { useTranslation } from "react-i18next";
+import * as NavigationBar from 'expo-navigation-bar';
 import * as ImagePicker from 'expo-image-picker';
 
 export default function Settings() {
@@ -66,6 +67,8 @@ export default function Settings() {
             aspect: [1, 1],
             quality: 1,
         });
+        //I added this cause the Media Library was setting the android navigation bar back to normal, it rehides it.
+        await NavigationBar.setVisibilityAsync("hidden");
         
         if (!result.canceled) {
             user.setUserPic(result.assets[0].uri);

@@ -10,7 +10,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
-  "dependencies": {
+"dependencies": {
     "@react-native-picker/picker": "^2.11.4",
     "axios": "^1.13.2",
     "babel-plugin-module-resolver": "^5.0.2",
