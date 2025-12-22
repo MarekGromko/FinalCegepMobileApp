@@ -30,7 +30,13 @@
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "The app accesses your camera to take profile pictures."
+        }
+      ]
     ]
   }
 }

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import Animated, { useSharedValue, useAnimatedStyle, withTiming, withDelay, Easing } from 'react-native-reanimated';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useTranslation } from "react-i18next";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useLocalSearchParams } from 'expo-router';
@@ -16,7 +18,7 @@ export default function CurrencyDetailsScreen() {
     const router = useRouter();
     const { code } = useLocalSearchParams();
     const ts = useThemedStyle(tsf);
-    
+    const { t } = useTranslation("details");
     const currency = getCurrencyDetails(code);
 
     if (!currency) {
@@ -64,43 +66,45 @@ export default function CurrencyDetailsScreen() {
     }, []);
 
     return (
-        <Animated.View style={[ss.headerCard, ts.card, headerStyle]}>
-            <TouchableOpacity onPress={() => router.back()} style={[ss.backButton, ts.card]} activeOpacity={0.7}>
-                <Ionicons name="arrow-back" size={22} color={ts.text.color}/>
-            </TouchableOpacity>
-            <ScrollView contentContainerStyle={ss.container} showsVerticalScrollIndicator={false}>
-                <View style={[ss.headerCard, ts.card]}>
-                    <Text style={[ss.currencyCode, CS.Font.bold, ts.primary]}>{currency.code}</Text>
-                    <Text style={[ss.currencyName, CS.Font.light, ts.text]}>{name}</Text>
-                    <Text style={[ss.currencySign, CS.Font.regular, ts.textDim]}>({currency.sign})</Text>
-                </View>
-                <Animated.View style={[ss.detailCard, ts.card, contentStyle]}>
-                    <Text style={[ss.detailTitle, CS.Font.medium, ts.text]}>Countries Using This Currency</Text>
-                    <View style={ss.flagsGrid}>
-                        {countryFlags.map((flag, index) => (
-                            <View key={index} style={ss.flagItem}>
-                                <Text style={ss.flagText}>{flag}</Text>
-                            </View>
-                        ))}
+        <SafeAreaProvider style={[ss.page, ts.page]}> 
+            <Animated.View style={[ss.headerCard, ts.card, headerStyle]}>
+                <TouchableOpacity onPress={() => router.back()} style={[ss.backButton, ts.card]} activeOpacity={0.7}>
+                    <Ionicons name="arrow-back" size={22} color={ts.text.color}/>
+                </TouchableOpacity>
+                <ScrollView contentContainerStyle={ss.container} showsVerticalScrollIndicator={false}>
+                    <View style={[ss.headerCard, ts.card]}>
+                        <Text style={[ss.currencyCode, CS.Font.bold, ts.primary]}>{currency.code}</Text>
+                        <Text style={[ss.currencyName, CS.Font.light, ts.text]}>{name}</Text>
+                        <Text style={[ss.currencySign, CS.Font.regular, ts.textDim]}>({currency.sign})</Text>
                     </View>
-                    {currency.users.length === 0 && (
-                        <Text style={[CS.Font.regular, ts.textDim, CS.margin(10, 0)]}>
-                            No specific countries listed (e.g., precious metals, virtual currencies).
-                        </Text>
-                    )}
-                </Animated.View>
-                <Animated.View style={contentStyle}>
-                    <TouchableOpacity style={[ss.detailCard, ts.card, ss.conversionButton]} onPress={() => router.push({pathname:`../(tabs)/conversion`, params: {baseCurrency: currency.code}})}>
-                         <View style={CS.Flex.centeredRow(10)}>
-                            <Ionicons name="swap-horizontal" size={24} color={ts.primary.color} />
-                            <Text style={[CS.Font.bold, ts.primary, ss.conversionText]}>
-                                Calculate Conversion Rate
+                    <Animated.View style={[ss.detailCard, ts.card, contentStyle]}>
+                        <Text style={[ss.detailTitle, CS.Font.medium, ts.text]}>{t("details:CountriesUsingThisCurrency")}</Text>
+                        <View style={ss.flagsGrid}>
+                            {countryFlags.map((flag, index) => (
+                                <View key={index} style={ss.flagItem}>
+                                    <Text style={ss.flagText}>{flag}</Text>
+                                </View>
+                            ))}
+                        </View>
+                        {currency.users.length === 0 && (
+                            <Text style={[CS.Font.regular, ts.textDim, CS.margin(10, 0)]}>
+                                No specific countries listed (e.g., precious metals, virtual currencies).
                             </Text>
-                         </View>
-                    </TouchableOpacity>
-                </Animated.View>
-            </ScrollView>
-        </Animated.View>
+                        )}
+                    </Animated.View>
+                    <Animated.View style={contentStyle}>
+                        <TouchableOpacity style={[ss.detailCard, ts.card, ss.conversionButton]} onPress={() => router.push({pathname:`../(tabs)/conversion`, params: {baseCurrency: currency.code}})}>
+                             <View style={CS.Flex.centeredRow(10)}>
+                                <Ionicons name="swap-horizontal" size={24} color={ts.primary.color} />
+                                <Text style={[CS.Font.bold, ts.primary, ss.conversionText]}>
+                                    {t("details:CalculateConversionRate")}
+                                </Text>
+                             </View>
+                        </TouchableOpacity>
+                    </Animated.View>
+                </ScrollView>
+            </Animated.View>
+        </SafeAreaProvider>
     );
 }
 
