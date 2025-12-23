@@ -62,7 +62,7 @@ export default function PageConversion() {
                     </TouchableOpacity>
                     </View>
                     <View id='informationOutput' style={ss.informationOutput}>
-                        <Text style={[CS.Font.light, ts.item, ss.item]}>{t("conversion:rate")} : {rate}</Text>
+                        <Text style={[CS.Font.light, ts.item, ss.item, ts.text]}>{t("conversion:rate")} : {rate}</Text>
                         <Text style={[CS.Font.light, ts.item, ss.item, ts.primaryShade ]}>{currencyMap[convertToCurrency].sign}{convertedValue}</Text>
                     </View>
                 </View>
