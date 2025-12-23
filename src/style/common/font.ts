@@ -1,0 +1,9 @@
+const FNT = "inter";
+export const regular = { fontFamily: `${FNT}-regular` };
+export const light = { fontFamily: `${FNT}-light` };
+export const medium = { fontFamily: `${FNT}-medium` };
+export const bold = { fontFamily: `${FNT}-bold` };
+export const italic = { fontFamily: `${FNT}-regular-italic` }
+export const lightItalic = { fontFamily: `${FNT}-light-italic` }
+export const mediumItalic = { fontFamily: `${FNT}-medium-italic` }
+export const boldItalic = { fontFamily: `${FNT}-bold-italic` }
