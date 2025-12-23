@@ -68,8 +68,8 @@ export default function CurrencyDetailsScreen() {
     return (
         <SafeAreaProvider style={[ss.page, ts.page]}> 
             <Animated.View style={[ss.headerCard, ts.card, headerStyle]}>
-                <TouchableOpacity onPress={() => router.back()} style={[ss.backButton, ts.card]} activeOpacity={0.7}>
-                    <Ionicons name="arrow-back" size={22} color={ts.text.color}/>
+                <TouchableOpacity onPress={() => router.back()} style={[ss.backButton, ts.card]} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="Go back" testID="back-button">
+                    <Ionicons name="arrow-back" size={22} color={ts.text.color} />
                 </TouchableOpacity>
                 <ScrollView contentContainerStyle={ss.container} showsVerticalScrollIndicator={false}>
                     <View style={[ss.headerCard, ts.card]}>
